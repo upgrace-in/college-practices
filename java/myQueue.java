@@ -1,35 +1,49 @@
-// First In First Out
+// First In First Out - Circular Queue
 public class ArrayQueue {
 
     int lastUpdatedIndex = 0;
-    int start = 0;
-    int end = 5;
-    int[] arr;
+    int front;
+    int end;
+    int maxSize = 0;
+    int currentSize = 0;
+    private int[] arr;
+
+    public ArrayQueue(int size){
+        maxSize = size;
+        arr = new int[maxSize];
+        front = 0;
+        end = -1;
+        currentSize = 0;
+    }
 
     // return the first element
     public int peek(){
-        return arr[0];
+        return arr[front];
     }
 
     // printing whole queu
     void printQueue(){
-        for(int i=0; i < end; i++){
-            System.out.println(arr[i]);
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return;
         }
+        System.out.print("Queue elements: ");
+        for (int i = 0; i < currentSize; i++) {
+            int index = (front + i) % maxSize;
+            System.out.print(index + ":");
+            System.out.print(arr[index] + " ");
+        }
+        System.out.println();
     }
 
     // check if the arr is empty
     boolean isEmpty(){
-        if(lastUpdatedIndex == start) 
-            return true;
-        return false;
+        return currentSize == 0;
     }
 
     // check if the arr is not full
     boolean isFull(){
-        if(lastUpdatedIndex == end) 
-            return true;
-        return false;
+        return currentSize == maxSize;
     }
 
     // adding element if the queue is not full
@@ -37,19 +51,23 @@ public class ArrayQueue {
         if(isFull()){
             System.out.println("Queue is Full!!!");
         }else{
-            arr[lastUpdatedIndex] = ele;
-            lastUpdatedIndex++;
+            if(end == maxSize-1){
+                end = 0;
+            }else{
+                end++;
+            }
+            arr[end] = ele;
+            currentSize++;
         }
     }
 
     // removing the first element if the queue is not empty
-    public int dequeue(){
+    public void dequeue(){
         if(isEmpty()){
             System.out.println("Queue is Empty!!!");
         }else{
-            arr[start] = null;
-            start++;
-            end++;
+            front = (front + 1) % maxSize;
+            currentSize--;
         }
     }
 }
@@ -57,8 +75,17 @@ public class ArrayQueue {
 class myQueue {
 
     public static void main(String[] args){
-        ArrayQueue arr = new ArrayQueue();
-        // System.out.println(arr.number(2));
+        ArrayQueue arr = new ArrayQueue(5);
+        arr.enqueue(4);
+        arr.enqueue(2);
+        arr.enqueue(7);
+        arr.enqueue(4);
+        arr.enqueue(4);
+        // arr.enqueue(4); // queue is full
+        arr.printQueue();
+        arr.dequeue();
+        arr.enqueue(18);
+        arr.printQueue();
     }
 
 }
