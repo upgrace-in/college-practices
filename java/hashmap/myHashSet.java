@@ -1,40 +1,38 @@
+import java.util.ArrayList;
+
 class MyHashSet {
 
-    private Integer[] arr;
-    private int size = 0;
-    private int currentSize = -1;
+    private ArrayList<Integer> arr;
 
-    public MyHashSet(int mySize) {
-        size = mySize;
-        arr = new Integer[size];
+    public MyHashSet() {
+        arr = new ArrayList<>();
     }
     
     public void add(int key) {
-        for(int i=0; i<size; i++){
-            if(arr[i] != null && arr[i] == key)
+        for(int i=0; i<arr.size(); i++){
+            if(arr.get(i) == key)
                 return;
         }
-        currentSize++;
-        arr[currentSize] = key;
+        arr.add(key);
     }
     
     public void remove(int key) {
-        for(int i=0; i<size; i++){
-            if(arr[i] != null && arr[i] == key)
-                arr[i] = null;
+        for(int i=0; i<arr.size(); i++){
+            if(arr.get(i) == key)
+                arr.remove(i);
         }
     }
     
     public boolean contains(int key) {
-        for(int i=0; i<size; i++){
-            if(arr[i] != null && arr[i] == key)
+        for(int i=0; i<arr.size(); i++){
+            if(arr.get(i) == key)
                 return true;
         }
         return false;
     }
 
     public static void main(String[] args){
-        MyHashSet obj = new MyHashSet(10);
+        MyHashSet obj = new MyHashSet();
         obj.add(1);
         System.out.println(obj.contains(1));
         obj.remove(1);
