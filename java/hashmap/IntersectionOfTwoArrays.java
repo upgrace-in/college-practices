@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class HashSet{
+public class HashSetv2{
 
     private ArrayList<Integer> arr = new ArrayList<>();
 
@@ -43,17 +43,16 @@ public class HashSet{
 class IntersectionOfTwoArrays {
     public ArrayList<Integer> intersection(int[] nums1, int[] nums2) {
 
-        HashSet hash = new HashSet();
+        HashSetv2 hash = new HashSetv2();
         
         // loop through the first array
         for(int i=0; i<nums1.length; i++){
-            // add the items
-            hash.add(nums1[i]);
-
             for(int j=0; j<nums2.length; j++){
                 // remove whatveer doesn't matched
-                if(hash.contains(nums2[j]) == false)
-                    hash.remove(nums1[i]);
+                if(nums1[i] == nums2[j]){
+                    hash.add(nums1[i]);
+                    break;
+                }
             }
         }
 
@@ -64,8 +63,10 @@ class IntersectionOfTwoArrays {
 
     public static void main(String[] args){
         IntersectionOfTwoArrays s = new IntersectionOfTwoArrays();
-        int[] nums1 = {1,2,2,1};
-        int[] nums2 = {2,2};
+        // int[] nums1 = {1,2,2,1};
+        // int[] nums2 = {2,2};
+        int[] nums1 = {4,9,5};
+        int[] nums2 = {9,4,9,8,4};
         s.intersection(nums1, nums2);
     }
 }
