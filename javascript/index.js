@@ -20,5 +20,5 @@
 // }
 // console.log(person.fname)
 
-let obj = new Object({name: "HARI"})
+let obj = new Object({ name: "HARI" })
 console.log(obj)
