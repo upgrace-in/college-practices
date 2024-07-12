@@ -1,13 +1,13 @@
 public class BinaryTree{
-    int value;
+    int data;
     BinaryTree left, right;
 
     public BinaryTree(int val){
-        this.value = val;
+        this.data = val;
     }
 
     public void insert(int val){
-        if(val <= value){
+        if(val <= data){
             if(left == null){
                 left = new BinaryTree(val);
             }else{
@@ -24,7 +24,7 @@ public class BinaryTree{
 
     // Pre Order transversal
     public void DFS_DISPLAY(){
-        System.out.print(value+" ");
+        System.out.print(data+" ");
         if(left != null){
             left.DFS_DISPLAY();
         }
@@ -37,7 +37,7 @@ public class BinaryTree{
         if(left != null){
             left.inOrderTransversal();
         }
-        System.out.print(value+" ");
+        System.out.print(data+" ");
         if(right != null){
             right.inOrderTransversal();
         }
@@ -50,12 +50,12 @@ public class BinaryTree{
         if(right != null){
             right.inOrderTransversal();
         }
-        System.out.print(value+" ");
+        System.out.print(data+" ");
     }
 
     public boolean contains(int val){
         boolean status = false;
-        if(value == val){
+        if(data == val){
             return true;
         } 
         if(left != null){
@@ -66,22 +66,62 @@ public class BinaryTree{
         }
         return status;
     }
+
+    public BinaryTree delete(BinaryTree root, int key){
+        if(root == null){
+            return root;
+        }
+
+        if(key < root.data){
+            root.left = delete(root.left, key);
+        }else if(key > root.data){
+            root.right = delete(root.right, key);
+        }
+
+        else{
+            if(root.left == null){
+                return root.right;
+            }else if(root.right == null){
+                return root.left;
+            }
+            // deleting the item
+            root.data = minValue(root.right);
+            root.right = delete(root.right, root.data);
+        }
+
+        return root;
+    }
+
+    static int minValue(BinaryTree root){
+        int minv = root.data;
+        while(root.left != null){
+            minv = root.left.data;
+            root = root.left;
+        }
+        return minv;
+    }
+
 }
 
 class base {
 
     public static void main(String[] args){
-        BinaryTree bt = new BinaryTree(3);
+        BinaryTree bt = new BinaryTree(4);
         bt.insert(2);
-        bt.insert(7);
+        bt.insert(3);
         bt.insert(1);
+        bt.insert(6);
         bt.insert(5);
-        // bt.DFS_DISPLAY();
+        bt.insert(7);
+        bt.DFS_DISPLAY();
         // System.out.println();
         // bt.inOrderTransversal();
+        System.out.println();
+        bt.delete(bt, 4);
+        bt.DFS_DISPLAY();
         // System.out.println();
         // bt.postOrderTransversal();
         // bt.BFS_DISPLAY(bt);
-        System.out.println(bt.contains(10));
+        // System.out.println(bt.contains(10));
     }
 }
